@@ -1,28 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>NOT TWC</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
-    <link rel="stylesheet" href="assets/css/style.css">
-</head>
-<body>
-    <header><h1>Weather Dashboard</h1></header>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+      integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="assets/css/style.css" />
+  </head>
+  <body>
+    <header>
+        <div class="text-center">
+            <h1>NOT TWC Weather Dashboard</h1>
+        </div>
+        <nav class="hidden" id="nav"></nav>
+    </header>
     <main>
-        <div class="search" id="search"></div>
-        <div class="past-search row" id="past-search"></div>
-        <div class="current row" id="current">
-            <div class="current-weather col-md-6" id="current-weather"></div>
-            <div class="current-map col-md-6" id="current-map"></div>
-        </div>
-        <div class="future-title" id="future-title"><h2>The Week Ahead</h2></div>
-        <div class="future row" id="future">
-
-        </div>
+      <div class="search" id="search">
+        <form id="search-form" name="city-search" method="POST">
+          <label for="user-name"><h2>Search for a City:</h2></label>
+          <input
+            type="text"
+            name="city-search"
+            id="city-search"
+            placeholder="City or Zip"
+            size="30"
+          />
+        </form>
+      </div>
+      <div class="past-search row" id="past-search"></div>
+      <div class="current row" id="current">
+        <div class="current-weather col-md-6" id="current-weather"></div>
+        <div class="current-map col-md-6" id="current-map"></div>
+      </div>
+      <div class="future-title" id="future-title"><h2>The Week Ahead</h2></div>
+      <div class="future row" id="future"></div>
     </main>
     <script src="assets/js/script.js"></script>
-</body>
+  </body>
 </html>
-
