@@ -1,9 +1,26 @@
 let navEl = document.querySelector("#nav");
 let citySearchEl = document.querySelector("#city-search");
+let stateSearchEl = document.querySelector("#state");
 let pastSearchEl = document.querySelector("#past-search");
 let currentWeatherEl = document.querySelector("#current-weather");
 let currentMapEl = document.querySelector("#current-map");
 let futureEl = document.querySelector("#future");
+
+let getEndpoint = function() {
+    endpoint = `https://api.openweathermap.org/data/2.5/weather?q=Houston,tx,usa&units=imperial&appid=579b64ec752a4651bfdc49c3c591949e`
+}
+getEndpoint();
+fetch(endpoint)
+    .then(function (response){
+        return response.json();
+    })
+    .then(function (jsonData){
+        console.log(jsonData);
+    })
+
+
+
+
 
 //TO Do:
 // Capture search form and turn into coordinates for weather API
