@@ -4,10 +4,10 @@ let citySearchEl = document.querySelector("#city-search");
 let stateSearchEl = document.querySelector("#state");
 let pastSearchEl = document.querySelector("#past-search");
 let currentWeatherEl = document.querySelector("#current-weather");
-let currentMapEl = document.querySelector("#current-map");
 let futureEl = document.querySelector("#future");
 let goBtnEl = document.querySelector("#goBtn");
 let cityErrorEl = document.querySelector("#city-error");
+let stateAbbr;
 let citySearch;
 let stateSearch;
 let lat;
@@ -17,6 +17,8 @@ let currentFeel;
 let currentWind;
 let currentHumidity;
 let currentUV;
+const abbrFullName = {"AZ":"Arizona","AL":"Alabama","AK":"Alaska","AR":"Arkansas","CA":"California","CO":"Colorado","CT":"Connecticut","DE":"Delaware","FL":"Florida","GA":"Georgia","HI":"Hawaii","ID":"Idaho","IL":"Illinois","IN":"Indiana","IA":"Iowa","KS":"Kansas","KY":"Kentucky","LA":"Louisiana","ME":"Maine","MD":"Maryland","MA":"Massachusetts","MI":"Michigan","MN":"Minnesota","MS":"Mississippi","MO":"Missouri","MT":"Montana","NE":"Nebraska","NV":"Nevada","NH":"New Hampshire","NJ":"New Jersey","NM":"New Mexico","NY":"New York","NC":"North Carolina","ND":"North Dakota","OH":"Ohio","OK":"Oklahoma","OR":"Oregon","PA":"Pennsylvania","RI":"Rhode Island","SC":"South Carolina","SD":"South Dakota","TN":"Tennessee","TX":"Texas","UT":"Utah","VT":"Vermont","VA":"Virginia","WA":"Washington","WV":"West Virginia","WI":"Wisconsin","WY":"Wyoming"};
+const fullNameAbbr = {"arizona":"AZ","alabama":"AL","alaska":"AK","arkansas":"AR","california":"CA","colorado":"CO","connecticut":"CT","districtofcolumbia":"DC","delaware":"DE","florida":"FL","georgia":"GA","hawaii":"HI","idaho":"ID","illinois":"IL","indiana":"IN","iowa":"IA","kansas":"KS","kentucky":"KY","louisiana":"LA","maine":"ME","maryland":"MD","massachusetts":"MA","michigan":"MI","minnesota":"MN","mississippi":"MS","missouri":"MO","montana":"MT","nebraska":"NE","nevada":"NV","newhampshire":"NH","newjersey":"NJ","newmexico":"NM","newyork":"NY","northcarolina":"NC","northdakota":"ND","ohio":"OH","oklahoma":"OK","oregon":"OR","pennsylvania":"PA","rhodeisland":"RI","southcarolina":"SC","southdakota":"SD","tennessee":"TN","texas":"TX","utah":"UT","vermont":"VT","virginia":"VA","washington":"WA","westvirginia":"WV","wisconsin":"WI","wyoming":"WY"};
 //dayArray each top level is a day
 //dayArray secondary level stores 0 = Weather Type | 1 = weather icon | 2 = temp low | 3 = temp high | 4 = wind speed | 5 = humidity
 let dayArray = [[], [], [], [], [], []];
@@ -65,7 +67,7 @@ let getEndpoint2 = function () {
 };
 
 let getEndpoint1 = function () {
-  endpoint = `https://api.openweathermap.org/data/2.5/weather?q=${citySearch},${stateSearch},usa&units=imperial&appid=${apiKey}`;
+  endpoint = `https://api.openweathermap.org/data/2.5/weather?q=${citySearch},tx,usa&units=imperial&appid=${apiKey}`;
 
   fetch(endpoint)
     .then(function (response) {
@@ -91,6 +93,7 @@ let loadData = function () {
     citySearchEl.value = citySearch;
     stateSearch = localStorage.getItem("lastState");
     stateSearchEl.value = stateSearch;
+    convertStateToAbbr(stateSearch);
     getEndpoint1();
   }
 };
@@ -103,11 +106,27 @@ let captureCity = function (event) {
       cityErrorEl.classList.add("hidden");
       citySearch = citySearchEl.value;
       stateSearch = stateSearchEl.value;
+      convertStateToAbbr(stateSearch);
+      console.log(stateAbbr);
       localStorage.setItem("lastCity", citySearch);
       localStorage.setItem("lastState", stateSearch);
+      localStorage.setItem("lastStateAbbr", stateAbbr);
+      console.log(stateSearch);
       getEndpoint1();
     }
   };
+
+  function convertStateToAbbr(stateSearch) {
+    if(stateSearch === undefined) return stateSearch;
+    var strInput = stateSearch;
+    var strStateToFind = strInput.toLowerCase().replace(/\ /g, '');
+    stateAbbr = fullNameAbbr[strStateToFind];
+    console.log(stateAbbr);
+  }
+
+// let populateCurrent = function(){
+//   currentWeatherEl.innerHTML = 
+// }
 
 loadData();
 goBtnEl.addEventListener("click", captureCity);
