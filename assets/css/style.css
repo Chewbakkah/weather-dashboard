@@ -15,8 +15,16 @@ button {
   /* margin-bottom: 20px; */
   /* vertical-align: center; */
 }
+main a {
+  text-decoration: none;
+  color: inherit;
+}
 .hidden {
   display: none;
+}
+.error {
+  color: #ff0000;
+  font-weight: bold;
 }
 .search {
   align-items: center;
