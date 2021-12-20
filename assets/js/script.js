@@ -17,13 +17,9 @@ let currentFeel;
 let currentWind;
 let currentHumidity;
 let currentUV;
-//0 = Weather Type | 1 = weather icon | 2 = temp low | 3 = temp high | 4 = wind speed | 5 = humidity
+//dayArray each top level is a day
+//dayArray secondary level stores 0 = Weather Type | 1 = weather icon | 2 = temp low | 3 = temp high | 4 = wind speed | 5 = humidity
 let dayArray = [[],[],[],[],[],[]];
-let dayArray2 = [];
-let dayArray3 = [];
-let dayArray4 = [];
-let dayArray5 = [];
-let dayArray6 = [];
 
 // weather API https://openweathermap.org/
 
@@ -53,7 +49,7 @@ fetch(endpoint)
         console.log(jsonData);
         currentUV = jsonData.current.uvi;
         for(i = 1; i < 7; i++){
-                let weatherTemp = jsonData.daily[i+1].weather[0].main;
+                let weatherTemp = jsonData.daily[i+1].weather[0].description;
                 dayArray[i-1][0] = weatherTemp;
                 let weatherIcon = jsonData.daily[i+1].weather[0].icon;
                 dayArray[i-1][1] = weatherIcon;
