@@ -23,6 +23,18 @@ let dayArray = [[], [], [], [], [], []];
 
 // weather API https://openweathermap.org/
 
+let getEndpoint3 = function () {
+    endpoint = `https://tile.openweathermap.org/map/precipitation_new/5/${lat}/${lon}.png?appid=${apiKey}`;
+  
+    fetch(endpoint)
+      .then(function (response) {
+        return response.json();
+      })
+      .then(function (jsonData) {
+        console.log(jsonData);
+        }
+      )
+  };
 
 let getEndpoint2 = function () {
   endpoint = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&units=imperial&appid=${apiKey}`;
