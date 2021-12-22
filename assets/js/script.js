@@ -74,9 +74,49 @@ const fullNameAbbr = {
 //dayArray each top level is a day
 //dayArray secondary level stores 0 = Weather Type | 1 = weather icon | 2 = temp low | 3 = temp high | 4 = wind speed | 5 = humidity
 let dayArray = [[], [], [], [], [], []];
-
+let monthsArray = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
+let dayTextualArray = [
+  "Sunday",
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+  "Sunday",
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+];
+let date;
 // location API https://positionstack.com/
 // weather API https://openweathermap.org/
+
+setDate = function () {
+  let today = new Date();
+  let day = today.getDay();
+  date = dayTextualArray[day] + ", " + monthsArray[today.getMonth()] +
+    " " +
+    today.getDate() +
+    ", " +
+    today.getFullYear();
+};
+
 
 let getEndpoint2 = function () {
   endpoint = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&units=imperial&appid=${apiKey2}`;
@@ -93,6 +133,15 @@ let getEndpoint2 = function () {
       currentUV = jsonData.current.uvi;
       for (i = 1; i < 7; i++) {
         let weatherTemp = jsonData.daily[i + 1].weather[0].description;
+        let toTitleCase = function (str) {
+          str = str.toLowerCase().split(' ');
+          for (var i = 0; i < str.length; i++) {
+            str[i] = str[i].charAt(0).toUpperCase() + str[i].slice(1);
+          }
+          weatherTemp = str.join(' ');
+        };
+        toTitleCase(weatherTemp);
+        console.log(weatherTemp);
         dayArray[i - 1][0] = weatherTemp;
         let weatherIcon = jsonData.daily[i + 1].weather[0].icon;
         dayArray[i - 1][1] = weatherIcon;
@@ -105,7 +154,9 @@ let getEndpoint2 = function () {
         let humidity = jsonData.daily[i + 1].humidity;
         dayArray[i - 1][5] = humidity;
       }
+      setDate();
       populateCurrent();
+      populateFuture();
     });
 };
 
@@ -159,9 +210,56 @@ function convertStateToAbbr(stateSearch) {
   stateAbbr = fullNameAbbr[strStateToFind];
 }
 
-let populateCurrent = function(){
-  currentWeatherEl.innerHTML = "<h2>" + citySearch + ", " + stateAbbr + "</h2>" + "Temp: " + currentTemp + "&deg;<br />" + "Feels Like: " + currentFeel + "&deg;<br />" + "Humidity: " + currentHumidity + "%<br />" + "UV Index: " + currentUV;
-}
+let populateCurrent = function () {
+  currentWeatherEl.innerHTML =
+    "<h2>For " +
+    citySearch +
+    ", " +
+    stateAbbr +
+    "</h2>" + "<h4>" + date + "</h4>" +
+    "Temp: " +
+    currentTemp +
+    "&deg;<br />" +
+    "Feels Like: " +
+    currentFeel +
+    "&deg;F<br />" +
+    "Humidity: " +
+    currentHumidity +
+    "%<br />" +
+    "UV Index: " +
+    currentUV;
+};
+//dayArray secondary level stores 0 = Weather Type | 1 = weather icon | 2 = temp low | 3 = temp high | 4 = wind speed | 5 = humidity
+let populateFuture = function () {
+  let dayTextualArray = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+  ];
+  let date = new Date();
+  let day = date.getDay();
+  day = day + 1;
+  for (i = 0; i < dayArray.length; i++) {
+    day = day + i;
+    let futureDayEl = document.createElement("div");
+    futureDayEl.className = "future-day col-md-2";
+    futureDayEl.innerHTML = dayTextualArray[day] + "<br />" + dayArray[i][0] + "<br />" + "<img src=\"http://openweathermap.org/img/wn/" + dayArray[i][1] + "@2x.png\">" + "<br />Low: " + dayArray[i][2] + "&deg;F" + "<br />High: " + dayArray[i][3] + "&deg;F" + "<br />Wind: " + dayArray[i][4] + "MPH" + "<br />Humidity: " + dayArray[i][5] + "%";
+
+
+    day = day - i;
+    futureEl.appendChild(futureDayEl);
+  }
+};
 
 loadData();
 goBtnEl.addEventListener("click", captureCity);
