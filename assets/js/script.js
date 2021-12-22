@@ -18,58 +18,6 @@ let currentFeel;
 let currentWind;
 let currentHumidity;
 let currentUV;
-const abbrFullName = {
-  AZ: "Arizona",
-  AL: "Alabama",
-  AK: "Alaska",
-  AR: "Arkansas",
-  CA: "California",
-  CO: "Colorado",
-  CT: "Connecticut",
-  DE: "Delaware",
-  FL: "Florida",
-  GA: "Georgia",
-  HI: "Hawaii",
-  ID: "Idaho",
-  IL: "Illinois",
-  IN: "Indiana",
-  IA: "Iowa",
-  KS: "Kansas",
-  KY: "Kentucky",
-  LA: "Louisiana",
-  ME: "Maine",
-  MD: "Maryland",
-  MA: "Massachusetts",
-  MI: "Michigan",
-  MN: "Minnesota",
-  MS: "Mississippi",
-  MO: "Missouri",
-  MT: "Montana",
-  NE: "Nebraska",
-  NV: "Nevada",
-  NH: "New Hampshire",
-  NJ: "New Jersey",
-  NM: "New Mexico",
-  NY: "New York",
-  NC: "North Carolina",
-  ND: "North Dakota",
-  OH: "Ohio",
-  OK: "Oklahoma",
-  OR: "Oregon",
-  PA: "Pennsylvania",
-  RI: "Rhode Island",
-  SC: "South Carolina",
-  SD: "South Dakota",
-  TN: "Tennessee",
-  TX: "Texas",
-  UT: "Utah",
-  VT: "Vermont",
-  VA: "Virginia",
-  WA: "Washington",
-  WV: "West Virginia",
-  WI: "Wisconsin",
-  WY: "Wyoming",
-};
 const fullNameAbbr = {
   arizona: "AZ",
   alabama: "AL",
@@ -138,7 +86,6 @@ let getEndpoint2 = function () {
       return response.json();
     })
     .then(function (jsonData) {
-      console.log(jsonData);
       currentTemp = jsonData.current.temp;
       currentFeel = jsonData.current.feels_like;
       currentWind = jsonData.current.wind_speed;
@@ -158,7 +105,7 @@ let getEndpoint2 = function () {
         let humidity = jsonData.daily[i + 1].humidity;
         dayArray[i - 1][5] = humidity;
       }
-      console.log(dayArray);
+      populateCurrent();
     });
 };
 
@@ -170,7 +117,6 @@ let getEndpoint1 = function () {
       return response.json();
     })
     .then(function (jsonData) {
-      console.log(jsonData);
       lat = jsonData.data[0].latitude;
       lon = jsonData.data[0].longitude;
     })
@@ -199,11 +145,9 @@ let captureCity = function (event) {
     citySearch = citySearchEl.value;
     stateSearch = stateSearchEl.value;
     convertStateToAbbr(stateSearch);
-    console.log(stateAbbr);
     localStorage.setItem("lastCity", citySearch);
     localStorage.setItem("lastState", stateSearch);
     localStorage.setItem("lastStateAbbr", stateAbbr);
-    console.log(stateSearch);
     getEndpoint1();
   }
 };
@@ -213,12 +157,11 @@ function convertStateToAbbr(stateSearch) {
   var strInput = stateSearch;
   var strStateToFind = strInput.toLowerCase().replace(/\ /g, "");
   stateAbbr = fullNameAbbr[strStateToFind];
-  console.log(stateAbbr);
 }
 
-// let populateCurrent = function(){
-//   currentWeatherEl.innerHTML =
-// }
+let populateCurrent = function(){
+  currentWeatherEl.innerHTML = "<h2>" + citySearch + ", " + stateAbbr + "</h2>" + "Temp: " + currentTemp + "&deg;<br />" + "Feels Like: " + currentFeel + "&deg;<br />" + "Humidity: " + currentHumidity + "%<br />" + "UV Index: " + currentUV;
+}
 
 loadData();
 goBtnEl.addEventListener("click", captureCity);
