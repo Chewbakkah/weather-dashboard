@@ -161,7 +161,7 @@ let getEndpoint2 = function () {
 };
 
 let getEndpoint1 = function () {
-  endpoint = `https://api.positionstack.com/v1/forward?access_key=${apiKey1}&query=${citySearch},${stateAbbr}`;
+  endpoint = `http://api.positionstack.com/v1/forward?access_key=${apiKey1}&query=${citySearch},${stateAbbr}`;
 
   fetch(endpoint)
     .then(function (response) {
@@ -231,6 +231,7 @@ let populateCurrent = function () {
 };
 //dayArray secondary level stores 0 = Weather Type | 1 = weather icon | 2 = temp low | 3 = temp high | 4 = wind speed | 5 = humidity
 let populateFuture = function () {
+  futureEl.innerHTML = "";
   let dayTextualArray = [
     "Sunday",
     "Monday",
