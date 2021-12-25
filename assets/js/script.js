@@ -397,18 +397,9 @@ goBtnEl.addEventListener("click", captureCity);
 pastSearchEl.addEventListener("click", getPast);
 //TO Do:
 
-// Store search results in local storage and display on main page as options
-// check search against already stored cities to prevent duplicates
-// Make delete button for removing these clickable cities
-
-// UV index needs to be colored based on severity
-// style info for display on main page
-// push info with variable classes so that css file can style based on conditions
-
 // style elements in css file
-// style conditional classes based on weather type
 
 // BONUS STUFF:
 // add background weather images
 // add dark and light modes
-
+// Make delete button for removing clickable cities
