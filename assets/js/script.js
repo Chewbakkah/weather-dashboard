@@ -255,12 +255,13 @@ let captureCity = function (event) {
     localStorage.setItem("lastState", stateSearch);
     localStorage.setItem("lastStateAbbr", stateAbbr);
     let previousCity = citySearch + "." + stateAbbr;
-    console.log(previousCity);
+    
     if(cityArray.includes(previousCity)){
       return
     }else{
     cityArray.push(previousCity);
     localStorage.setItem("pastSearch", JSON.stringify(cityArray));
+    pastSearchBtn();
   }
     getEndpoint1();
   }
@@ -270,7 +271,7 @@ let pastSearchBtn = function(){
   pastSearchEl.innerHTML = "";
   for(i=0; i<cityArray.length; i++){
     let pastCityEl = document.createElement("button");
-    pastCityEl.className = "btn small-btn col-md-2";
+    pastCityEl.className = "btn small-btn col-md-3";
     pastCityEl.id = cityArray[i];
     // pastCityEl.onclick = this.id;
     pastCityEl.innerHTML = cityArray[i];
