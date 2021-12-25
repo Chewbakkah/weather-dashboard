@@ -161,15 +161,16 @@ let getEndpoint2 = function () {
 };
 
 let getEndpoint1 = function () {
-  endpoint = `http://api.positionstack.com/v1/forward?access_key=${apiKey1}&query=${citySearch},${stateAbbr}`;
+  endpoint = `https://api.geoapify.com/v1/geocode/search?text=${citySearch}%20${stateAbbr}&apiKey=1aa30fc92f034bb9bedb1e6638f20c7f`;
+  // endpoint = `http://api.positionstack.com/v1/forward?access_key=${apiKey1}&query=${citySearch},${stateAbbr}`;
 
   fetch(endpoint)
     .then(function (response) {
       return response.json();
     })
     .then(function (jsonData) {
-      lat = jsonData.data[0].latitude;
-      lon = jsonData.data[0].longitude;
+      lat = jsonData.features[0].bbox[1];
+      lon = jsonData.features[0].bbox[0];
     })
     .then(function () {
       getEndpoint2();
