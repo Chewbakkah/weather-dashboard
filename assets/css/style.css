@@ -34,3 +34,24 @@ main a {
 .icon{
   color: #000000;
 }
+.uvRed1{
+  background-color: #ff0000;
+  color: #000000;
+}
+.uvRed2{
+  background-color: #ff8300;
+  color: #000000;
+}
+.uvYellow1{
+  background-color: #ffce00;
+  color: #000000;
+}
+.uvGreen1{
+  background-color: #79ff00;
+  color: #000000;
+}
+.uvGreen2{
+  background-color: #96ff9D;
+  color: #000000;
+  padding: 5px 10px;
+}

@@ -104,7 +104,7 @@ let dayTextualArray = [
   "Friday",
 ];
 let date;
-// location API https://positionstack.com/
+// location API https://www.geoapify.com/
 // weather API https://openweathermap.org/
 
 setDate = function () {
@@ -226,9 +226,42 @@ let populateCurrent = function () {
     "&deg;F<br />" +
     "Humidity: " +
     currentHumidity +
-    "%<br />" +
+    "%<br />" + "<span id=\"uvColor\" class=\"\">" + 
     "UV Index: " +
-    currentUV;
+    currentUV + "</span>";
+    let uvColorEl = document.querySelector("#uvColor");
+    parseInt(currentUV);
+    if (currentUV <= 2){
+      uvColorEl.classList.add("uvGreen2");
+      uvColorEl.classList.remove("uvGreen1");
+      uvColorEl.classList.remove("uvYellow1");
+      uvColorEl.classList.remove("uvRed1");
+      uvColorEl.classList.remove("uvRed2");
+    }else if(currentUV <= 5){
+      uvColorEl.classList.add("uvGreen1");
+      uvColorEl.classList.remove("uvGreen2");
+      uvColorEl.classList.remove("uvYellow1");
+      uvColorEl.classList.remove("uvRed1");
+      uvColorEl.classList.remove("uvRed2");
+    }else if(currentUV <= 7){
+      uvColorEl.classList.add("uvYellow1");
+      uvColorEl.classList.remove("uvGreen2");
+      uvColorEl.classList.remove("uvGreen1");
+      uvColorEl.classList.remove("uvRed1");
+      uvColorEl.classList.remove("uvRed2");
+    }else if(currentUV <= 10){
+      uvColorEl.classList.add("uvRed2");
+      uvColorEl.classList.remove("uvGreen2");
+      uvColorEl.classList.remove("uvGreen1");
+      uvColorEl.classList.remove("uvRed1");
+      uvColorEl.classList.remove("uvYellow1");
+    }else if(currentUV >= 11){
+      uvColorEl.classList.add("uvRed1");
+      uvColorEl.classList.remove("uvGreen2");
+      uvColorEl.classList.remove("uvGreen1");
+      uvColorEl.classList.remove("uvRed2");
+      uvColorEl.classList.remove("uvYellow1");
+    }
 };
 //dayArray secondary level stores 0 = Weather Type | 1 = weather icon | 2 = temp low | 3 = temp high | 4 = wind speed | 5 = humidity
 let populateFuture = function () {
