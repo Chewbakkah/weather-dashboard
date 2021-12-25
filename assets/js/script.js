@@ -161,7 +161,7 @@ let getEndpoint2 = function () {
 };
 
 let getEndpoint1 = function () {
-  endpoint = `http://api.positionstack.com/v1/forward?access_key=${apiKey1}&query=${citySearch},${stateAbbr}`;
+  endpoint = `https://api.positionstack.com/v1/forward?access_key=${apiKey1}&query=${citySearch},${stateAbbr}`;
 
   fetch(endpoint)
     .then(function (response) {
