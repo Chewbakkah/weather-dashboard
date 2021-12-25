@@ -18,6 +18,57 @@ let currentFeel;
 let currentWind;
 let currentHumidity;
 let currentUV;
+const abbrNameFull = {AZ: 'Arizona',
+AL: 'Alabama',
+AK: 'Alaska',
+AR: 'Arkansas',
+CA: 'California',
+CO: 'Colorado',
+CT: 'Connecticut',
+DC: 'District of Columbia',
+DE: 'Delaware',
+FL: 'Florida',
+GA: 'Georgia',
+HI: 'Hawaii',
+ID: 'Idaho',
+IL: 'Illinois',
+IN: 'Indiana',
+IA: 'Iowa',
+KS: 'Kansas',
+KY: 'Kentucky',
+LA: 'Louisiana',
+ME: 'Maine',
+MD: 'Maryland',
+MA: 'Massachusetts',
+MI: 'Michigan',
+MN: 'Minnesota',
+MS: 'Mississippi',
+MO: 'Missouri',
+MT: 'Montana',
+NE: 'Nebraska',
+NV: 'Nevada',
+NH: 'New Hampshire',
+NJ: 'New Jersey',
+NM: 'New Mexico',
+NY: 'New York',
+NC: 'North Carolina',
+ND: 'North Dakota',
+OH: 'Ohio',
+OK: 'Oklahoma',
+OR: 'Oregon',
+PA: 'Pennsylvania',
+RI: 'Rhode Island',
+SC: 'South Carolina',
+SD: 'South Dakota',
+TN: 'Tennessee',
+TX: 'Texas',
+UT: 'Utah',
+VT: 'Vermont',
+VA: 'Virginia',
+WA: 'Washington',
+WV: 'West Virginia',
+WI: 'Wisconsin',
+WY: 'Wyoming' }
 const fullNameAbbr = {
   arizona: "AZ",
   alabama: "AL",
@@ -104,6 +155,7 @@ let dayTextualArray = [
   "Friday",
 ];
 let date;
+let cityArray = [];
 // location API https://www.geoapify.com/
 // weather API https://openweathermap.org/
 
@@ -141,7 +193,6 @@ let getEndpoint2 = function () {
           weatherTemp = str.join(' ');
         };
         toTitleCase(weatherTemp);
-        console.log(weatherTemp);
         dayArray[i - 1][0] = weatherTemp;
         let weatherIcon = jsonData.daily[i + 1].weather[0].icon;
         dayArray[i - 1][1] = weatherIcon;
@@ -184,6 +235,9 @@ let loadData = function () {
     stateSearch = localStorage.getItem("lastState");
     stateSearchEl.value = stateSearch;
     convertStateToAbbr(stateSearch);
+    cityArray = JSON.parse(localStorage.getItem("pastSearch"));
+    pastSearchBtn();
+
     getEndpoint1();
   }
 };
@@ -200,15 +254,59 @@ let captureCity = function (event) {
     localStorage.setItem("lastCity", citySearch);
     localStorage.setItem("lastState", stateSearch);
     localStorage.setItem("lastStateAbbr", stateAbbr);
+    let previousCity = citySearch + "." + stateAbbr;
+    console.log(previousCity);
+    if(cityArray.includes(previousCity)){
+      return
+    }else{
+    cityArray.push(previousCity);
+    localStorage.setItem("pastSearch", JSON.stringify(cityArray));
+  }
     getEndpoint1();
   }
 };
+
+let pastSearchBtn = function(){
+  pastSearchEl.innerHTML = "";
+  for(i=0; i<cityArray.length; i++){
+    let pastCityEl = document.createElement("button");
+    pastCityEl.className = "btn small-btn col-md-2";
+    pastCityEl.id = cityArray[i];
+    // pastCityEl.onclick = this.id;
+    pastCityEl.innerHTML = cityArray[i];
+    pastSearchEl.appendChild(pastCityEl);
+  }
+};
+let getPast = function(event){
+  event.preventDefault();
+  let getCity = event.target;
+  let getCityid = getCity.id
+  const splitCity = getCityid.split(".");
+  console.log(splitCity);
+  citySearch = splitCity[0];
+  stateAbbr = splitCity[1];
+  localStorage.setItem("lastCity", citySearch);
+  localStorage.setItem("lastStateAbbr", stateAbbr);
+  getEndpoint1();
+  convertAbbrToState(stateAbbr);
+  citySearchEl.value = citySearch;
+  stateSearchEl.value = stateSearch;
+  localStorage.setItem("lastState", stateSearch);
+}
 
 function convertStateToAbbr(stateSearch) {
   if (stateSearch === undefined) return stateSearch;
   var strInput = stateSearch;
   var strStateToFind = strInput.toLowerCase().replace(/\ /g, "");
   stateAbbr = fullNameAbbr[strStateToFind];
+}
+
+function convertAbbrToState(stateAbbr) {
+  console.log("ding");
+  // if (stateAbbr === undefined) return stateAbbr;
+  var strInput = stateAbbr;
+  var strStateToFind = strInput;
+  stateSearch = abbrNameFull[strStateToFind];
 }
 
 let populateCurrent = function () {
@@ -289,8 +387,6 @@ let populateFuture = function () {
     let futureDayEl = document.createElement("div");
     futureDayEl.className = "future-day col-md-2";
     futureDayEl.innerHTML = dayTextualArray[day] + "<br />" + dayArray[i][0] + "<br />" + "<img src=\"http://openweathermap.org/img/wn/" + dayArray[i][1] + "@2x.png\">" + "<br />Low: " + dayArray[i][2] + "&deg;F" + "<br />High: " + dayArray[i][3] + "&deg;F" + "<br />Wind: " + dayArray[i][4] + "MPH" + "<br />Humidity: " + dayArray[i][5] + "%";
-
-
     day = day - i;
     futureEl.appendChild(futureDayEl);
   }
@@ -298,6 +394,7 @@ let populateFuture = function () {
 
 loadData();
 goBtnEl.addEventListener("click", captureCity);
+pastSearchEl.addEventListener("click", getPast);
 //TO Do:
 
 // Store search results in local storage and display on main page as options
