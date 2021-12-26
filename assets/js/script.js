@@ -217,7 +217,7 @@ let getEndpoint2 = function () {
 
 let getEndpoint1 = function () {
   endpoint = `https://api.geoapify.com/v1/geocode/search?text=${citySearch}%20${stateAbbr}&apiKey=1aa30fc92f034bb9bedb1e6638f20c7f`;
-  // endpoint = `http://api.positionstack.com/v1/forward?access_key=${apiKey1}&query=${citySearch},${stateAbbr}`;
+  
 
   fetch(endpoint)
     .then(function (response) {
@@ -239,10 +239,15 @@ let loadData = function () {
     stateSearch = localStorage.getItem("lastState");
     stateSearchEl.value = stateSearch;
     convertStateToAbbr(stateSearch);
+    getEndpoint1();
+  }
+  let past = localStorage.getItem("pastSearch");
+  if (past == null | past == ""){
+    console.log("ding");
+  }else{
+    console.log(past);
     cityArray = JSON.parse(localStorage.getItem("pastSearch"));
     pastSearchBtn();
-
-    getEndpoint1();
   }
 };
 
@@ -277,15 +282,23 @@ let pastSearchBtn = function(){
     let pastCityEl = document.createElement("button");
     pastCityEl.className = "btn small-btn col-md-3";
     pastCityEl.id = cityArray[i];
-    // pastCityEl.onclick = this.id;
     pastCityEl.innerHTML = cityArray[i];
     pastSearchEl.appendChild(pastCityEl);
   }
+  let clearEl = document.createElement("button");
+  clearEl.className = "btn small-btn col-md-3";
+  clearEl.id = "clearPast";
+  clearEl.innerHTML = "<b>" + "Clear Past" + "</b>";
+  pastSearchEl.appendChild(clearEl);
 };
 let getPast = function(event){
   event.preventDefault();
   let getCity = event.target;
   let getCityid = getCity.id
+  if (getCityid == "clearPast"){
+    pastSearchEl.innerHTML = "";
+    localStorage.setItem("pastSearch", "");    
+  }else{
   const splitCity = getCityid.split(".");
   console.log(splitCity);
   citySearch = splitCity[0];
@@ -297,6 +310,7 @@ let getPast = function(event){
   citySearchEl.value = citySearch;
   stateSearchEl.value = stateSearch;
   localStorage.setItem("lastState", stateSearch);
+  }
 }
 
 function convertStateToAbbr(stateSearch) {
@@ -398,7 +412,6 @@ let populateFuture = function () {
 };
 
 viewMode = function () {
-  insertCollection = localStorage.getItem("collection");
   if (window.innerHeight > window.innerWidth) {
     endpoint = `https://api.unsplash.com/photos/random/?orientation=portrait&collections=${insertCollection}&client_id=${clientID}`;
   } else {
@@ -430,11 +443,4 @@ fetch(endpoint)
 loadData();
 goBtnEl.addEventListener("click", captureCity);
 pastSearchEl.addEventListener("click", getPast);
-//TO Do:
 
-// style elements in css file
-
-// BONUS STUFF:
-// add background weather images
-// add dark and light modes
-// Make delete button for removing clickable cities
