@@ -95,3 +95,57 @@ p {
   border-top: #ffffff 2px solid;
   border-bottom: #ffffff 2px solid;
 }
+h1, h2 {
+  margin: 0px;
+  padding-bottom: 5px;
+  padding-top: 5px;
+}
+.future {
+  align-items: center;
+  justify-content: space-around;
+}
+.future-day {
+  background-color: rgba(51, 51, 51, 0.8);
+  border-radius: 5px;
+  border: 2px solid #ffffff;
+  padding: 10px;
+  margin: 5px;
+  width: 14%;
+}
+.future-title {
+  margin-top: 30px;
+  background-color: rgba(51, 51, 51, 0.8);
+  color: #ffffff;
+}
+.title-fade {
+  background: linear-gradient(to right, rgba(51,51,51,0), rgba(51,51,51,0.9), rgba(51,51,51,0));
+  border-top: #ffffff 2px solid;
+  border-bottom: #ffffff 2px solid;
+}
+.rounded {
+  background-color: rgba(51,51,51,0.9);
+  border-radius: 5px;
+  border: 2px solid #ffffff;
+  margin: 10px;
+  padding: 10px;
+  width: 48%;
+  align-items: center;
+  justify-content: space-around;
+}
+.mg-btm {
+  margin-bottom: 30px;
+}
+
+@media only screen and (max-width: 1000px) {
+  .rounded {
+    width: 90%;
+    align-items: center;
+    justify-content: center;
+  }
+  .future-day {
+    width: 30%;
+}
+@media only screen and (max-width: 650px) {
+  .future-day {
+    width: 48%;
+}

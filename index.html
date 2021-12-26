@@ -20,14 +20,14 @@
   </head>
   <body>
     <header>
-      <div class="text-center">
+      <div class="text-center title-fade mg-btm">
         <h1>NOT TWC Weather Dashboard</h1>
       </div>
       <nav class="hidden" id="nav"></nav>
     </header>
     <main>
       <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-6 rounded">
         <div class="search" id="search">
           <form id="search-form" name="city-search" method="POST">
             <h2>Search for a City:</h2>
@@ -100,17 +100,17 @@
         </div>
         <div class="past-search" id="past-search"></div>
         </div>
-        <div class="current col-md-6" id="current">
+        <div class="current col-md-6 rounded" id="current">
           <div><h2>Current Weather</h2></div>
           <div id="current-weather"></div>
           
         </div>
       </div>      
-      <div class="future-title" id="future-title"><h2>The Week Ahead</h2></div>
+      <div class="future-title title-fade text-center mg-btm" id="future-title"><h2>The Week Ahead</h2></div>
       <div class="row future" id="future"></div>
     </main>
     <div class="bottom-credit center row">
-      <div class="dark center rounded" id="credits">
+      <div id="credits">
         <p class="imageDetails center">
           Background by <a id="creator" href="#">NAME</a> on
           <a href="https://www.unsplash.com">Unsplash</a>!<br />
