@@ -391,7 +391,7 @@ let populateFuture = function () {
     day = day + i;
     let futureDayEl = document.createElement("div");
     futureDayEl.className = "future-day col-md-2";
-    futureDayEl.innerHTML = dayTextualArray[day] + "<br />" + dayArray[i][0] + "<br />" + "<img src=\"http://openweathermap.org/img/wn/" + dayArray[i][1] + "@2x.png\">" + "<br />Low: " + dayArray[i][2] + "&deg;F" + "<br />High: " + dayArray[i][3] + "&deg;F" + "<br />Wind: " + dayArray[i][4] + "MPH" + "<br />Humidity: " + dayArray[i][5] + "%";
+    futureDayEl.innerHTML = "<b>" + dayTextualArray[day] + "</b>" + "<br />" + dayArray[i][0] + "<br />" + "<img src=\"http://openweathermap.org/img/wn/" + dayArray[i][1] + "@2x.png\">" + "<br />Low: " + dayArray[i][2] + "&deg;F" + "<br />High: " + dayArray[i][3] + "&deg;F" + "<br />Wind: " + dayArray[i][4] + "MPH" + "<br />Humidity: " + dayArray[i][5] + "%";
     day = day - i;
     futureEl.appendChild(futureDayEl);
   }
