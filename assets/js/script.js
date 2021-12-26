@@ -1,3 +1,7 @@
+let clientID = "T55TOxKxDJMpz91j6fEuSi-nPDhq1TpFAFtB91u4X9o";
+let insertCollection = "1408037";
+let creatorEl = document.querySelector("#creator");
+let unsplashLink = "https://www.unsplash.com";
 let apiKey1 = "5ca1f6d50863dfffced4dd5146b9fd57";
 let apiKey2 = "579b64ec752a4651bfdc49c3c591949e";
 let navEl = document.querySelector("#nav");
@@ -392,6 +396,36 @@ let populateFuture = function () {
     futureEl.appendChild(futureDayEl);
   }
 };
+
+viewMode = function () {
+  insertCollection = localStorage.getItem("collection");
+  if (window.innerHeight > window.innerWidth) {
+    endpoint = `https://api.unsplash.com/photos/random/?orientation=portrait&collections=${insertCollection}&client_id=${clientID}`;
+  } else {
+    endpoint = `https://api.unsplash.com/photos/random/?orientation=landscape&collections=${insertCollection}&client_id=${clientID}`;
+  }
+};
+viewMode();
+//this sends the request to the unsplash api and returns the data used for backgrounds and credits. the last then applies this data
+fetch(endpoint)
+  .then(function (response) {
+    return response.json();
+  })
+  .then(function (jsonData) {
+    randomImage = jsonData.urls.full;
+    creatorEl.innerText = jsonData.user.name;
+    if (jsonData.user.portfolio_url !== null) {
+      creatorEl.setAttribute("href", jsonData.user.portfolio_url);
+    } else {
+      creatorEl.setAttribute("href", unsplashLink);
+    }
+  })
+  .then(function () {
+    document.body.style.backgroundImage = "url('" + randomImage + "')";
+    document.body.style.backgroundSize = "cover";
+    document.body.style.backgroundRepeat = "no-repeat";
+    document.body.style.backgroundAttachment = "fixed";
+  });
 
 loadData();
 goBtnEl.addEventListener("click", captureCity);

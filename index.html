@@ -38,8 +38,9 @@
               id="city-search"
               placeholder="City"
               size="15"
+              class="form"
             />
-            <select id="state" name="state">
+            <select id="state" name="state" class="form">
               <option value="Alabama">Alabama</option>
               <option value="Alaska">Alaska</option>
               <option value="Arizona">Arizona</option>
@@ -95,8 +96,6 @@
             <div class="error hidden" id="city-error">
               * Please Insert City *
             </div>
-
-            <!-- <button class="my-auto" id="goBtn">Go!</button> -->
           </form>
         </div>
         <div class="past-search" id="past-search"></div>
@@ -110,6 +109,16 @@
       <div class="future-title" id="future-title"><h2>The Week Ahead</h2></div>
       <div class="row future" id="future"></div>
     </main>
+    <div class="bottom-credit center row">
+      <div class="dark center rounded" id="credits">
+        <p class="imageDetails center">
+          Background by <a id="creator" href="#">NAME</a> on
+          <a href="https://www.unsplash.com">Unsplash</a>!<br />
+          <!--update settings clickable text allows settings to be shown and altered again-->
+          
+        </p>
+      </div>
+    </div>
     <script src="assets/js/script.js"></script>
   </body>
 </html>
